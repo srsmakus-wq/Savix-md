@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>SAVIX MINI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #000;
+      font-family: 'Roboto', 'Orbitron', 'Courier New', monospace;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Enhanced cyber grid background */
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(0, 242, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: 0;
+      animation: gridPulse 10s infinite ease-in-out;
+    }
+
+    @keyframes gridPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.2; }
+    }
+
+    /* Gradient background with subtle animation */
+    .gradient-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a0a23, #1a1a4a, #2a2a72);
+      z-index: -1;
+      animation: gradientShift 15s infinite ease-in-out;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Binary rain effect */
+    .binary-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .binary {
+      position: absolute;
+      color: #00ff00;
+      font-size: 14px;
+      animation: fall linear forwards;
+      text-shadow: 0 0 5px #00ff00;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px); opacity: 0; }
+      5% { opacity: 0.8; }
+      95% { opacity: 0.8; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+      position: relative;
+    }
+
+    .box {
+      width: 420px;
+      padding: 40px;
+      background: rgba(10, 10, 30, 0.95);
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 
+        0 0 20px rgba(255, 0, 255, 0.5),
+        0 0 30px rgba(0, 242, 255, 0.3),
+        inset 0 0 15px rgba(0, 242, 255, 0.2);
+      z-index: 2;
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(0, 242, 255, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 0 30px rgba(255, 0, 255, 0.7),
+        0 0 40px rgba(0, 242, 255, 0.5);
+    }
+
+    h3, h6 {
+      color: #ff00ff;
+      margin: 10px 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px #ff00ff;
+    }
+
+    h3 {
+      font-size: 2rem;
+      font-family: 'Orbitron', monospace;
+      margin-bottom: 15px;
+    }
+
+    h6 {
+      font-size: 1.1rem;
+      color: #00ffff;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+    }
+
+    .input-container {
+      display: flex;
+      width: 100%;
+      margin-top: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .input-container::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ff00ff, #00ffff, #ff00ff, transparent);
+      animation: scanline 2.5s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .input-container input,
+    .input-container button {
+      height: 3.8rem;
+      font-size: 1.2rem;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+      font-family: 'Orbitron', 'Courier New', monospace;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .input-container input {
+      width: 70%;
+      border-radius: 12px 0 0 12px;
+      background: rgba(20, 30, 50, 0.9);
+      color: #00ffff;
+      padding-left: 1.5rem;
+      letter-spacing: 1px;
+      border: 2px solid #00ffff;
+      border-right: none;
+    }
+
+    .input-container input::placeholder {
+      color: rgba(0, 255, 255, 0.5);
+      font-style: italic;
+    }
+
+    .input-container input:focus {
+      background: rgba(20, 30, 50, 1);
+      box-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+    }
+
+    .input-container button {
+      width: 30%;
+      border-radius: 0 12px 12px 0;
+      background: linear-gradient(135deg, #ff00ff, #00bfff);
+      color: #fff;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border: 2px solid #ff00ff;
+      border-left: none;
+    }
+
+    .input-container button:hover {
+      background: linear-gradient(135deg, #00ffff, #ff00ff);
+      box-shadow: 0 0 15px rgba(0, 242, 255, 0.6);
+    }
+
+    a.centered-text {
+      color: #00ffff;
+      display: block;
+      margin-top: 25px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 1.5px;
+      font-family: 'Roboto', sans-serif;
+      transition: color 0.3s ease;
+    }
+
+    a.centered-text:hover {
+      color: #ff00ff;
+    }
+
+    #pair {
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      margin-top: 25px;
+      min-height: 80px;
+      text-align: center;
+      padding: 20px;
+      background: rgba(0, 20, 0, 0.4);
+      border-radius: 10px;
+      border: 2px solid rgba(0, 255, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    #copy {
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    #copy:hover {
+      color: #00ffff !important;
+      text-shadow: 0 0 10px #00ffff;
+    }
+
+    @media (max-width: 480px) {
+      .box {
+        width: 90%;
+        padding: 25px 20px;
+      }
+
+      h3 {
+        font-size: 1.6rem;
+      }
+
+      h6 {
+        font-size: 0.9rem;
+      }
+
+      .input-container input,
+      .input-container button {
+        height: 3.2rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background elements -->
+  <div class="gradient-bg"></div>
+  <div class="cyber-grid"></div>
+  <div class="binary-rain" id="binaryRain"></div>
+
+  <div class="container">
+    <div class="box" id="box">
+      <div id="text">
+        <i class="fa fa-user" style="color:#ff00ff; font-size: 2.5rem; margin-bottom: 20px;"></i>
+        <h3>SOS FREE BOT</h3>
+        <h6>Powered by Shanuwa ID</h6>
+        <h6>🔢 Enter your number with country code</h6>
+
+        <div class="input-container">
+          <input placeholder="+9472xxxxxxx" type="number" id="number">
+          <button id="submit">Submit</button>
+        </div>
+
+        <a id="waiting-message" class="centered-text" style="display: none;">Please wait a while...</a>
+        <main id="pair"></main>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    let a = document.getElementById("pair");
+    let b = document.getElementById("submit");
+    let c = document.getElementById("number");
+
+    async function Copy() {
+      let text = document.getElementById("copy").innerText;
+      let obj = document.getElementById("copy");
+      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
+      obj.innerText = "COPIED";
+      obj.style = "color:#00ffff;font-weight:bold";
+      setTimeout(() => {
+        obj.innerText = text;
+        obj.style = "color:#00ff00;font-weight:bold";
+      }, 1500);
+    }
+
+    b.addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      if (!c.value) {
+        a.innerHTML = '<a style="color:white;font-weight:bold">Enter your WhatsApp number with Country Code</a><br><br>';
+      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
+        a.innerHTML = '<a style="color:red;font-weight:bold">Invalid Number</a><br><br>';
+      } else {
+        const number = c.value.replace(/[^0-9]/g, "");
+        c.type = "text";
+        c.value = "+" + number;
+        c.style = "color:#00ffff;font-size:20px;";
+        a.innerHTML = '<a style="color:#00ff00;font-weight:bold">Connecting to server...</a><br><br>';
+        
+        // Simulate connection process with typing effect
+        setTimeout(() => {
+          a.innerHTML = '<a style="color:#00ff00;font-weight:bold">Verifying number...</a><br><br>';
+        }, 1500);
+        
+        setTimeout(async () => {
+          try {
+            let { data } = await axios.get(`/code?number=${number}`);
+            let code = data.code || "Service Unavailable";
+            a.innerHTML = `<font id="copy" onclick="Copy()" style="color:#00ff00;font-weight:bold" size="5">CODE: <span style="color:white;">${code}</span></font><br><br><br>`;
+          } catch (error) {
+            a.innerHTML = '<a style="color:red;font-weight:bold">Connection failed. Try again.</a><br><br>';
+          }
+        }, 3000);
+      }
+    });
+
+    // Create binary rain effect
+    const binaryRain = document.getElementById('binaryRain');
+    function createBinary() {
+      const binaryChar = Math.random() > 0.5 ? '1' : '0';
+      const binary = document.createElement('div');
+      binary.classList.add('binary');
+      binary.textContent = binaryChar;
+      binary.style.left = Math.random() * 100 + 'vw';
+      binary.style.animationDuration = (Math.random() * 4 + 3) + 's';
+      binaryRain.appendChild(binary);
+      
+      // Remove element after animation completes
+      setTimeout(() => {
+        binary.remove();
+      }, 7000);
+    }
+    
+    // Generate binary characters
+    setInterval(createBinary, 150);
+  </script>
+</body>
+  </html>
